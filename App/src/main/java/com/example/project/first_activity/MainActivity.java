@@ -23,7 +23,6 @@ import com.example.project.second_activity.ListGroupActivity;
 import com.vk.api.sdk.VK;
 import com.vk.api.sdk.auth.VKAccessToken;
 import com.vk.api.sdk.auth.VKAuthCallback;
-
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
@@ -56,7 +55,13 @@ public class MainActivity extends AppCompatActivity {
             System.out.println(e.getMessage());
         }
         id = Integer.parseInt(idSaver.getText());
+
         if (id < 1) VK.login(this);
+//        VKUserGet userGet = new VKUserGet();
+//        userGet.get(id);
+//        String name = userGet.getName();
+//        where_to.setText(name);
+
         currentTime = Calendar.getInstance().getTime();
         myHour = currentTime.getHours();
         myMinute = currentTime.getMinutes();
