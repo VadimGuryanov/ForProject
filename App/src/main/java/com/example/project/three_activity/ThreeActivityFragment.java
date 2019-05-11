@@ -1,5 +1,7 @@
 package com.example.project.three_activity;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,13 +22,14 @@ import java.security.acl.Group;
 import java.util.ArrayList;
 import java.util.Date;
 
+import static com.example.project.three_activity.ThreeActivity.number;
+
 public class ThreeActivityFragment extends Fragment implements GroupCallBack {
 
     private int myHour;
     private int myMinute;
     private Date currentTime;
     private int id;
-    private int number;
 
 
     public static ThreeActivityFragment newInstance() {
@@ -45,29 +48,30 @@ public class ThreeActivityFragment extends Fragment implements GroupCallBack {
         RecyclerView.Adapter adapter = new GroupAdapter(getList(), this);
         recyclerView.setAdapter(adapter);
         id = getArguments().getInt("id");
-        number = getArguments().getInt("номер группы");
         return view;
     }
 
     @Override
     public void itemClick(People people, int i) {
-
+        Uri webpage = Uri.parse("http://www.vk.com/id" + people.getId());
+        Intent intent = new Intent(Intent.ACTION_VIEW, webpage);
+        if (intent.resolveActivity(getContext().getPackageManager()) != null) {
+            startActivity(intent);
+        }
     }
 
     public ArrayList<People> getList() {
         ArrayList<People> people = new ArrayList<>();
         if (number == 3) {
-            people.add(new People(id, "Гурьянов Вадим", R.drawable.my_ava));
-        }
-        if (number == 0) {
-            people.add(new People(id, "Виталий Грошев", R.drawable.vitalia));
-            people.add(new People(id, "Булат Гимазов", R.drawable.bulat));
-            people.add(new People(id, "Михаил Счастливцев", R.drawable.mihail));
-            people.add(new People(id, "Гурьянов Вадим", R.drawable.my_ava));
-        }
-        if (number == 1) {
-            people.add(new People(id, "Сергей Рыжаков", R.drawable.seriga));
-            people.add(new People(id, "Гурьянов Вадим", R.drawable.my_ava));
+            people.add(new People(id + "", "Михаил Счастливцев", R.drawable.mihail));
+        } else if (number == 0) {
+            people.add(new People("325636534", "Гурьянов Вадим", R.drawable.my_ava));
+            people.add(new People("115021925", "Булат Гимазов", R.drawable.bulat));
+            people.add(new People("105407349", "Виталий Грошев", R.drawable.vitalia));
+            people.add(new People(id + "", "Михаил Счастливцев", R.drawable.mihail));
+        } else if (number == 1) {
+            people.add(new People("71341298", "Сергей Рыжаков", R.drawable.seriga));
+            people.add(new People(id + "", "Михаил Счастливцев", R.drawable.mihail));
         }
         return people;
     }

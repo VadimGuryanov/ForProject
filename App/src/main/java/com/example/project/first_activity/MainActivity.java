@@ -17,13 +17,21 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.project.IdSaver;
 import com.example.project.R;
+import com.example.project.RequestListOfMaps;
 import com.example.project.second_activity.ListGroupActivity;
 import com.vk.api.sdk.VK;
+import com.vk.api.sdk.VKApiConfig;
 import com.vk.api.sdk.auth.VKAccessToken;
 import com.vk.api.sdk.auth.VKAuthCallback;
+import com.vk.api.sdk.exceptions.VKApiExecutionException;
+
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -42,10 +50,25 @@ public class MainActivity extends AppCompatActivity {
     private int position_to = 0;
     private int position_from = 0;
     private ArrayAdapter<String> list_place;
+    public static List<Map> usersMap = new ArrayList<>();
+    public static boolean flag = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        VK.initialize(this);
+        VK.setConfig(new VKApiConfig(getBaseContext(), VK.apiManager.getConfig().getAppId(),
+                VK.apiManager.getConfig().getValidationHandler(),
+                VK.apiManager.getConfig().getDeviceId(), VK.apiManager.getConfig().getVersion(),
+                VK.apiManager.getConfig().getOkHttpProvider(),
+                VK.apiManager.getConfig().getDefaultTimeoutMs(),
+                VK.apiManager.getConfig().getPostRequestsTimeout(),
+                VK.apiManager.getConfig().getLogger(), VK.apiManager.getConfig().getAccessToken(),
+                VK.apiManager.getConfig().getSecret(),
+                VK.apiManager.getConfig().getLogFilterCredentials(),
+                VK.apiManager.getConfig().getCallsPerSecondLimit(),
+                VK.apiManager.getConfig().getHttpApiHost(), "ru"));
+
         setContentView(R.layout.activity_start);
         try {
             idSaver = new IdSaver(this);
@@ -54,11 +77,17 @@ public class MainActivity extends AppCompatActivity {
         }
         id = Integer.parseInt(idSaver.getText());
 
-        if (id < 1) VK.login(this);
-//        VKUserGet userGet = new VKUserGet();
-//        userGet.get(id);
-//        String name = userGet.getName();
-//        where_to.setText(name);
+        //if (id < 1)
+            VK.login(this);
+
+
+        try {
+            usersMap = RequestListOfMaps.getList(new int[]{id, 325636534, 387892240, 1, 363236});
+        }
+        catch(VKApiExecutionException e) {
+            e.printStackTrace();
+        }
+
 
         currentTime = Calendar.getInstance().getTime();
         myHour = currentTime.getHours();
@@ -88,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        String[] alert = { "DY", "Двойка", "Казань Арена", "Токмач"};
+        String[] alert = { "Деревня Универсиады", "Двойка", "Кольцо", "Токмач", "Мега", "Физфак", "Уникс"};
         spinner_to = findViewById(R.id.spinner_to);
         list_place = new ArrayAdapter<>(
                 getApplicationContext(), android.R.layout.simple_spinner_item,
@@ -159,6 +188,24 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra("откуда",  list_place.getItem(position_from).toString());
         intent.putExtra("куда",  list_place.getItem(position_to).toString());
         intent.putExtra("сколько вас", btn_radio);
+
+//        System.out.println("//////////////////////////////////////////////////////////////");
+//        for(int i = 0; i < usersMap.size(); i++) {
+//            Iterator it = usersMap.get(i).values().iterator();
+//            while(it.hasNext()) {
+//                System.out.print(it.next().toString()+"__");
+//            }
+//            System.out.println();
+//        }
+//        System.out.println("//////////////////////////////////////////////////////////////");
+//        int count = 0; ////////////////////////////////////////////////////Ожидание запроса
+//        while(!flag) {                                                   //
+//            count++;                                                    //
+//        }                                                                  //
+//        if(flag) {                                                      //
+//            System.out.println("//////////////////////" + count);      //
+//            startActivity(intent);                                    //
+//        }
         startActivity(intent);
     }
 

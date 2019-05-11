@@ -16,9 +16,9 @@ import com.example.project.three_activity.ThreeActivity;
 
 public class ListGroupActivity extends AppCompatActivity{
 
-    private TextView tv_time;
-    private TextView tv_where_from;
-    private TextView tv_where_to;
+    public static TextView tv_time;
+    public static TextView tv_where_from;
+    public static TextView tv_where_to;
     private FragmentTransaction transaction;
     private FragmentManager manager;
     private RoomsFragment roomsFragment;
@@ -62,7 +62,10 @@ public class ListGroupActivity extends AppCompatActivity{
     public void plus(View view) {
         Intent intent = new Intent(this, ThreeActivity.class);
         intent.putExtra("id", id);
-        intent.putExtra("номер", 3);
+        intent.putExtra("н", 3);
+        intent.putExtra("время", tv_time.getText());
+        intent.putExtra("откуда", tv_where_from.getText());
+        intent.putExtra("куда", tv_where_to.getText());
         startActivity(intent);
     }
 
@@ -71,6 +74,9 @@ public class ListGroupActivity extends AppCompatActivity{
         if (json != null) {
                 Bundle bundle = new Bundle();
                 bundle.putInt("id", id);
+                bundle.putString("время", tv_time.getText().toString());
+                bundle.putString("откуда", tv_where_from.getText().toString());
+                bundle.putString("куда", tv_where_to.getText().toString());
                 roomsFragment.setArguments(bundle);
                 openFragment(roomsFragment);
         } else {

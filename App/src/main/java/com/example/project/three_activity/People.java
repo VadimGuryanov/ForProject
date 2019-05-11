@@ -2,21 +2,22 @@ package com.example.project.three_activity;
 
 public class People {
 
-    private int id;
+    private String id;
     private String name;
     private int photo;
 
-    public People(int id, String name, int photo) {
+    public People(String id, String name, int photo) {
         this.id = id;
         this.name = name;
         this.photo = photo;
     }
 
-    public int getId() {
+
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
