@@ -1,4 +1,5 @@
 package com.example.project.second_activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -11,6 +12,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.project.R;
+import com.example.project.three_activity.ThreeActivity;
 
 public class ListGroupActivity extends AppCompatActivity{
 
@@ -31,7 +33,6 @@ public class ListGroupActivity extends AppCompatActivity{
         setContentView(R.layout.list_group_activity);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setTitle("Такси");
         id = getIntent().getIntExtra("id", 0);
         int people = getIntent().getIntExtra("сколько вас", 0);
         String time = getIntent().getStringExtra("время");
@@ -56,6 +57,13 @@ public class ListGroupActivity extends AppCompatActivity{
 //                        .setAction("Action", null).show();
 //            }
 //        });
+    }
+
+    public void plus(View view) {
+        Intent intent = new Intent(this, ThreeActivity.class);
+        intent.putExtra("id", id);
+        intent.putExtra("номер", 3);
+        startActivity(intent);
     }
 
     public void onClick(View view) {

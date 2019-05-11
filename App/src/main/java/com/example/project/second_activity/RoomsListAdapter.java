@@ -17,9 +17,9 @@ public class RoomsListAdapter extends RecyclerView.Adapter<RoomHolder> {
     public static ArrayList<Room> rooms;
 
 
-    public RoomsListAdapter(ArrayList<Room> events, RoomListCallBack callBack) {
+    public RoomsListAdapter(ArrayList<Room> rooms, RoomListCallBack callBack) {
         this.callBack = callBack;
-        this.rooms = events;
+        this.rooms = rooms;
     }
 
     @NonNull

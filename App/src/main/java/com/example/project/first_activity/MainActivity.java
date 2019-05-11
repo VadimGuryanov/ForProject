@@ -12,11 +12,9 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
-
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.project.IdSaver;
 import com.example.project.R;
 import com.example.project.second_activity.ListGroupActivity;
@@ -73,7 +71,6 @@ public class MainActivity extends AppCompatActivity {
 //        where_to = findViewById(R.id.et_where_to);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setTitle("Такси");
         RadioButton radioButton = findViewById(R.id.cb_1);
         radioButton.setChecked(true);
         radioGroup = findViewById(R.id.radioGroup);
